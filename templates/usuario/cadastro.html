@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="card">
+  <h5 class="card-header">Cadastro/Usuário</h5>
+  <div class="card-body">
+
+    <form method="POST" action="/usuario/cadastro" class="row g-3">
+
+      <input type="hidden" class="form-control" id="id" name="id" value="{{item.id}}">
+    
+      <div class="col-md-6">
+        <label for="status" class="form-label">Tipo</label>
+        <select class="form-control" name="status" required>
+            <option value="">--Selecione</option>
+            <option value="1">Funcionário</option>
+            <option value="2">Professor</option>
+            <option value="3">Aluno</option>
+            <option value="4">Público</option>
+        </select>
+      </div>
+    
+        <div class="col-md-6">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" required value="{{item.nome}}">
+        </div>
+    
+        <div class="col-md-6">
+          <label for="cpf" class="form-label">CPF</label>
+          <input type="text" class="form-control" id="cpf" name="cpf" required value="{{item.cpf}}">
+        </div>
+    
+        <div class="col-md-6">
+          <label for="email" class="form-label">E-mail</label>
+          <input type="email" class="form-control" id="email" name="email" required required value="{{item.email}}">
+        </div>
+    
+        <div class="col-md-6">
+          <label for="telefone" class="form-label">Telefone</label>
+          <input type="text" class="form-control" id="telefone" name="telefone" required value="{{item.telefone}}">
+        </div>
+    
+        <div class="col-md-6">
+          <label for="status" class="form-label">Status</label>
+          <select class="form-control" name="status" required>
+              <option value="">--Selecione</option>
+              <option value="1">Ativo</option>
+              <option value="0">Inativo</option>
+          </select>
+        </div>
+    
+      <div class="col-12">
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

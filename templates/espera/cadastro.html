@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<h1>Cadastro de Autor</h1>
+
+<form method="POST" action="{{url_for('')}}" class="row g-3">
+  <div class="col-md-6">
+    <label for="id" class="form-label">Código</label>
+    <input disabled type="text" class="form-control" id="id" name="id">
+  </div>
+
+  <div class="col-md-6">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" name="nome">
+    </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">Salvar</button>
+  </div>
+</form>
+
+{% endblock %}

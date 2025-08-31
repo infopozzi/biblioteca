@@ -1,0 +1,82 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="card">
+  <h5 class="card-header">Cadastro básico/Exemplar</h5>
+  <div class="card-body">
+
+    <div class="row">
+      <div class="col-12 " style="text-align:right;">
+        <a href="/exemplar/cadastro" type="button" class="btn btn-primary" >Novo Exemplar</a>
+      </div>
+    </div>
+    
+    <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">idPublicacao</th>
+            <th scope="col">localizacao</th>
+            <th scope="col">condicoes</th>
+            <th scope="col">status</th>
+            <th scope="col" style="text-align: right;">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in lista %}
+    
+          <tr>
+            <th scope="row"> {{item.id}}</th>
+            <td> {{item.idPublicacao}}</td>
+            <td> {{item.localizacao}}</td>
+            
+            <td> 
+              {% if item.condicoes == 1 %}
+              <span>Bom estado</span>
+              {% elif item.condicoes == 2 %}
+              <span>Médio estado</span>
+              {% else %}
+              <span>Péssimo estado</span>
+              {% endif %}
+            </td>
+
+            <td> 
+              {% if item.status == 1 %}
+              <span>Disponível</span>
+              {% else %}
+              <span>Não Disponível</span>
+              {% endif %}
+            </td>
+    
+            <td style="text-align: right;">
+              <div class="btn-group" >
+                <a href="/autor/cadastro/{{item.id}}" type="button" class="btn btn-warning" >Alterar</a>
+
+                {% if item.status == 1 %}
+                 <input type="button" class="btn btn-success" value="Emprestar" onclick="addCarrinhoExemplar('{{item.publicacao.titulo}}','{{item.id}}')" >
+                {% else %}
+                <input type="button" class="btn btn-success" disabled value="Emprestar" >
+                {% endif %}
+                 <a onclick="Excluir('{{item.id}}')" data-id="{{item.id}}" type="button" class="btn btn-danger" >Excluir</a>
+              </div>
+            </td>
+    
+          </tr>
+    
+            {% endfor %}
+    
+        </tbody>
+      </table>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <a href="/publicacao" type="button" class="btn btn-secondary" >Voltar</a>
+    </div>
+    
+  </div>
+</div>
+
+
+  <script src="{{url_for('static', filename='exemplar.js')}}"></script>
+  
+  {% endblock %}

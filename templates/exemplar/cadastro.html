@@ -1,0 +1,51 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="card">
+  <h5 class="card-header">Cadastro básico/Exemplar</h5>
+  <div class="card-body">
+
+    <form method="POST" action="/exemplar/cadastro" class="row g-3">
+
+      <input type="hidden" class="form-control" id="id" name="id" value="{{item.id}}">
+    
+      <div class="col-md-6">
+        <label for="idPublicacao" class="form-label">Publicação</label>
+        <select class="form-control" name="idPublicacao" required>
+            
+        </select>
+    
+      </div>
+    
+        <div class="col-md-6">
+          <label for="localizacao" class="form-label">Localização</label>
+          <input type="text" class="form-control" id="localizacao" name="localizacao" value="{{item.localizacao}}">
+        </div>
+    
+        <div class="col-md-6">
+          <label for="status" class="form-label">Status</label>
+          <select class="form-control" name="status" required>
+              <option value="">--Selecione--</option>
+              <option value="1">Disponível</option>
+              <option value="0">Não Disponível</option>
+          </select>
+        </div>
+    
+        <div class="col-md-6">
+          <label for="condicoes" class="form-label">Condições</label>
+          <select class="form-control" name="condicoes" required>
+              <option value="">--Selecione--</option>
+              <option value="1">Bom estado</option>
+              <option value="2">Médio estado</option>
+              <option value="3">Péssimo estado</option>
+          </select>
+        </div>
+    
+      <div class="col-12">
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

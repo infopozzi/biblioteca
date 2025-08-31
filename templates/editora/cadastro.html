@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="card">
+  <h5 class="card-header">Cadastro básico/Editora</h5>
+  <div class="card-body">
+    <form method="POST" action="/editora/cadastro" class="row g-3">
+  
+      <input type="hidden" class="form-control" id="id" name="id" value="{{item.id}}">
+    
+      <div class="col-md-6">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" required value="{{item.nome}}">
+        </div>
+    
+      <div class="col-12">
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
