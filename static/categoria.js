@@ -1,8 +1,7 @@
 async function Excluir(id){
-    excluir = confirm('Tem certeza que deseja excluir esse item?');
+    const excluir = confirm('Tem certeza que deseja excluir esse item?');
 
-    if (excluir)
-    {
+    if (excluir) {
         const data = new URLSearchParams();
         data.append('id', id);
 
@@ -18,7 +17,7 @@ async function Excluir(id){
             debugger
             if (response.ok) {
                 const result = await response.json();
-                console.log('Autor excluído com sucesso:', result.message); 
+                console.log('Categoria excluída com sucesso:', result.message); 
                 window.location.href = '/categoria'           
             } else {
                 const errorResult = await response.json();
