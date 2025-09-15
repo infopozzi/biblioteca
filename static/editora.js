@@ -18,7 +18,7 @@ async function Excluir(id){
             debugger
             if (response.ok) {
                 const result = await response.json();
-                console.log('Autor excluído com sucesso:', result.message); 
+                console.log('Editora excluída com sucesso:', result.message); 
                 window.location.href = '/editora'           
             } else {
                 const errorResult = await response.json();
