@@ -1,104 +1,97 @@
 {% extends "template.html" %}
+
 {% block conteudo %}
 
 <div class="card">
   <h5 class="card-header">Cadastro básico/Publicação</h5>
   <div class="card-body">
     <form method="POST" action="/publicacao/cadastro" class="row g-3">
+      <input type="hidden" class="form-control" id="id" name="id" value="{{ item.id }}">
 
-      <input type="hidden" class="form-control" id="id" name="id" value="{{item.id}}">
-    
       <div class="col-md-4">
         <label for="idAutor" class="form-label">Autor</label>
-        <div class=" input-group">
+        <div class="input-group">
           <select class="form-control" name="idAutor" id="idAutor" required>
-              <option value="">--Selecione--</option>
-              {% for item_ in listaAutores %}
-                {% if item_.id == item.idAutor %}
-                  <option selected value="{{item_.id}}">{{item_.nome}}</option>
-                {% else %}
-                  <option value="{{item_.id}}">{{item_.nome}}</option>
-                {% endif %}
-              {% endfor %}
+            <option value="">--Selecione--</option>
+            {% for item_ in listaAutores %}
+              {% if item_.id == item.idAutor %}
+                <option selected value="{{ item_.id }}">{{ item_.nome }}</option>
+              {% else %}
+                <option value="{{ item_.id }}">{{ item_.nome }}</option>
+              {% endif %}
+            {% endfor %}
           </select>
-          <input type="button" class="btn btn-primary" value="+" data-bs-toggle="modal" data-bs-target="#modalAutor">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAutor">+</button>
         </div>
       </div>
-    
+
       <div class="col-md-4">
         <label for="idCategoria" class="form-label">Categoria</label>
-        <div class=" input-group">
+        <div class="input-group">
           <select class="form-control" id="idCategoria" name="idCategoria" required>
             <option value="">--Selecione--</option>
             {% for item_ in listaCategoria %}
               {% if item_.id == item.idCategoria %}
-                <option selected value="{{item_.id}}">{{item_.nome}}</option>
+                <option selected value="{{ item_.id }}">{{ item_.nome }}</option>
               {% else %}
-                <option value="{{item_.id}}">{{item_.nome}}</option>
+                <option value="{{ item_.id }}">{{ item_.nome }}</option>
               {% endif %}
             {% endfor %}
           </select>
-          <input type="button" class="btn btn-primary" value="+" data-bs-toggle="modal" data-bs-target="#modalCategoria">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCategoria">+</button>
         </div>
       </div>
-    
+
       <div class="col-md-4">
         <label for="idEditora" class="form-label">Editora</label>
-        <div class=" input-group">
+        <div class="input-group">
           <select class="form-control" id="idEditora" name="idEditora" required>
             <option value="">--Selecione--</option>
             {% for item_ in listaEditora %}
               {% if item_.id == item.idEditora %}
-                <option selected value="{{item_.id}}">{{item_.nome}}</option>
+                <option selected value="{{ item_.id }}">{{ item_.nome }}</option>
               {% else %}
-                <option value="{{item_.id}}">{{item_.nome}}</option>
+                <option value="{{ item_.id }}">{{ item_.nome }}</option>
               {% endif %}
-            {% endfor %} 
+            {% endfor %}
           </select>
-          <input type="button" class="btn btn-primary" value="+" data-bs-toggle="modal" data-bs-target="#modalEditora">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditora">+</button>
         </div>
       </div>
-    
-        <div class="col-md-3">
-          <label for="idTipo" class="form-label">Tipo</label>
-          <select class="form-control" name="idTipo" id="idTipo" required>
-              <option value="">--Selecione--</option>
-              {% if item.idTipo == 1 %}
-                <option selected value="1">Livro</option>
-              {% elif item.idTipo == 2 %}
-                <option selected value="2">Revista</option>
-              {% else %}
-                <option value="1">Livro</option>
-                <option value="2">Revista</option>
-              {% endif %}
-          </select>
-        </div>
-    
-        <div class="col-md-3">
-          <label for="ano" class="form-label">Ano</label>
-          <input type="text" class="form-control" id="ano" name="ano" required value="{{item.ano}}">
-        </div>
-    
-        <div class="col-md-6">
-          <label for="titulo" class="form-label">Título</label>
-          <input type="text" class="form-control" id="titulo" name="titulo" required value="{{item.titulo}}">
-        </div>
-    
-        <div class="col-md-6">
-          <label for="descricao" class="form-label">Descrição</label>
-          <input type="text" class="form-control" id="descricao" name="descricao" required value="{{item.descricao}}">
-        </div>
-    
-        <div class="col-md-3">
-          <label for="qtdeTotal" class="form-label">Quantidade Total</label>
-          <input type="number" class="form-control" id="qtdeTotal" name="qtdeTotal" value="{{item.qtdeTotal}}">
-        </div>
-    
-        <div class="col-md-3">
-          <label for="qtdeDisponivel" class="form-label">Quantidade Disponível</label>
-          <input type="number" class="form-control" id="qtdeDisponivel" name="qtdeDisponivel" value="{{item.qtdeDisponivel}}">
-        </div>
-    
+      <div class="col-md-3">
+        <label for="idTipo" class="form-label">Tipo</label>
+        <select class="form-control" name="idTipo" id="idTipo" required>
+          <option value="">--Selecione--</option>
+          <option value="1" {% if item.idTipo == 1 %}selected{% endif %}>Livro</option>
+          <option value="2" {% if item.idTipo == 2 %}selected{% endif %}>Revista</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label for="ano" class="form-label">Ano</label>
+        <input type="number" class="form-control" id="ano" name="ano" required value="{{ item.ano }}">
+      </div>
+
+      <div class="col-md-6">
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" required value="{{ item.titulo }}">
+      </div>
+
+      <div class="col-md-6">
+        <label for="descricao" class="form-label">Descrição</label>
+        <input type="text" class="form-control" id="descricao" name="descricao" value="{{ item.descricao }}">
+      </div>
+
+      <div class="col-md-3">
+        <label for="qtdeTotal" class="form-label">Quantidade Total</label>
+        <input type="number" class="form-control" id="qtdeTotal" name="qtdeTotal" value="{{ item.qtdeTotal }}">
+      </div>
+
+      <div class="col-md-3">
+        <label for="qtdeDisponivel" class="form-label">Quantidade Disponível</label>
+        <input type="number" class="form-control" id="qtdeDisponivel" name="qtdeDisponivel" value="{{ item.qtdeDisponivel }}">
+      </div>
+
       <div class="col-12">
         <button type="submit" class="btn btn-success">Salvar</button>
       </div>
@@ -106,48 +99,20 @@
   </div>
 </div>
 
-
-
-
-
-<div class="modal fade" id="modalAutor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAutor" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form id="formAutor" method="POST" action="/autor/cadastro" class="row g-3">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastro de Autor</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <form id="formAutor">
+        <div class="modal-header">
+          <h5 class="modal-title">Cadastro de Autor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nomeAutor" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nomeAutor" name="nomeAutor" required>
           </div>
-          <div class="modal-body">            
-          <div class="col-md-6">
-              <label for="nomeAutor" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="nomeAutor" name="nomeAutor" required>
-          </div>
-         </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-success">Salvar</button>
-          </div>
-    </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="modalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="formCategoria" method="POST" action="/categoria/cadastro" class="row g-3"> 
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Cadastro de Categoria</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-            <div class="col-md-6">
-                <label for="nomeCategoria" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nomeCategoria" name="nomeCategoria" required>
-            </div>
-          </div>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
           <button type="submit" class="btn btn-success">Salvar</button>
@@ -157,32 +122,51 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalEditora" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalCategoria" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form id="formEditora" method="POST" action="/editora/cadastro" class="row g-3">
+      <form id="formCategoria">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cadastro de Editora</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Cadastro de Categoria</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-          <div class="modal-body">       
-          <div class="col-md-6">
-              <label for="nomeEditora" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="nomeEditora" name="nomeEditora" required>
-            </div>
+        <div class="modal-body">
+           <div class="mb-3">
+            <label for="nomeCategoria" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nomeCategoria" name="nomeCategoria" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
           <button type="submit" class="btn btn-success">Salvar</button>
         </div>
-        </form>
-
+      </form>
     </div>
   </div>
 </div>
 
-<script src="{{url_for('static', filename='publicacao.js')}}"></script>
+<div class="modal fade" id="modalEditora" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formEditora">
+        <div class="modal-header">
+          <h5 class="modal-title">Cadastro de Editora</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nomeEditora" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nomeEditora" name="nomeEditora" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-success">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='publicacao.js') }}"></script>
 
 {% endblock %}
-
-
