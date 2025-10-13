@@ -50,7 +50,7 @@
     
             <td style="text-align: right;">
               <div class="btn-group" >
-                <a href="/autor/cadastro/{{item.id}}" type="button" class="btn btn-warning" >Alterar</a>
+                <a href="/exemplar/cadastro/{{item.id}}" type="button" class="btn btn-warning" >Alterar</a>
 
                 {% if item.status == 1 %}
                  <input type="button" class="btn btn-success" value="Emprestar" onclick="addCarrinhoExemplar('{{item.publicacao.titulo}}','{{item.id}}')" >

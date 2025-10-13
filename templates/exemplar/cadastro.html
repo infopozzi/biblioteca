@@ -7,39 +7,45 @@
 
     <form method="POST" action="/exemplar/cadastro" class="row g-3">
 
-      <input type="hidden" class="form-control" id="id" name="id" value="{{item.id}}">
-    
+      <input type="hidden" class="form-control" id="id" name="id" value="{{ item.id or 0 }}">
+       
       <div class="col-md-6">
         <label for="idPublicacao" class="form-label">Publicação</label>
         <select class="form-control" name="idPublicacao" required>
-            
+          <option value="">--Selecione--</option>
+          {% for pub in publicacoes %}
+            <option value="{{ pub.id }}"
+              {% if item.idPublicacao == pub.id %}selected{% endif %}>
+              {{ pub.titulo }}
+            </option>
+          {% endfor %}
         </select>
-    
       </div>
     
-        <div class="col-md-6">
-          <label for="localizacao" class="form-label">Localização</label>
-          <input type="text" class="form-control" id="localizacao" name="localizacao" value="{{item.localizacao}}">
-        </div>
+      <div class="col-md-6">
+        <label for="localizacao" class="form-label">Localização</label>
+        <input type="text" class="form-control" id="localizacao" name="localizacao"
+               value="{{ item.localizacao or '' }}">
+      </div>
     
-        <div class="col-md-6">
-          <label for="status" class="form-label">Status</label>
-          <select class="form-control" name="status" required>
-              <option value="">--Selecione--</option>
-              <option value="1">Disponível</option>
-              <option value="0">Não Disponível</option>
-          </select>
-        </div>
+      <div class="col-md-6">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-control" name="status" required>
+          <option value="">--Selecione--</option>
+          <option value="1" {% if item.status == 1 %}selected{% endif %}>Disponível</option>
+          <option value="0" {% if item.status == 0 %}selected{% endif %}>Não Disponível</option>
+        </select>
+      </div>
     
-        <div class="col-md-6">
-          <label for="condicoes" class="form-label">Condições</label>
-          <select class="form-control" name="condicoes" required>
-              <option value="">--Selecione--</option>
-              <option value="1">Bom estado</option>
-              <option value="2">Médio estado</option>
-              <option value="3">Péssimo estado</option>
-          </select>
-        </div>
+      <div class="col-md-6">
+        <label for="condicoes" class="form-label">Condições</label>
+        <select class="form-control" name="condicoes" required>
+          <option value="">--Selecione--</option>
+          <option value="1" {% if item.condicoes == 1 %}selected{% endif %}>Bom estado</option>
+          <option value="2" {% if item.condicoes == 2 %}selected{% endif %}>Médio estado</option>
+          <option value="3" {% if item.condicoes == 3 %}selected{% endif %}>Péssimo estado</option>
+        </select>
+      </div>
     
       <div class="col-12">
         <button type="submit" class="btn btn-success">Salvar</button>
