@@ -3,7 +3,7 @@ from Repositorio.Usuario import Usuario, UsuarioNaoEncontrado
 
 usuario_route = Blueprint('usuario', __name__)
 
-@usuario_route.route('/usuario')
+@usuario_route.route('/')
 def index():
     lista = Usuario.listar()
     return render_template('usuario/index.html', lista=lista)
