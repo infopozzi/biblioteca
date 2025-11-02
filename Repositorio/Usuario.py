@@ -1,35 +1,28 @@
 from config.data_base import db
-from Repositorio.Exemplar import Exemplar
 
 class Usuario(db.Model):
     __tablename__ = 'Usuario'
 
     id = db.Column(db.Integer, primary_key=True)
-    idExemplar = db.Column(db.Integer, db.ForeignKey('Exemplar.id'), nullable=True)
     tipo = db.Column(db.Integer, nullable=False)               # 1=Aluno,2=Professor,3=Visitante (exemplo)
     nome = db.Column(db.String(255), nullable=False)
     cpf = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(50), nullable=False)
-    endereco = db.Column(db.String(255), nullable=False)
     status = db.Column(db.Integer, nullable=False)             # 1=Ativo,2=Inativo,...
     observacao = db.Column(db.Text, nullable=True)
 
-    exemplar = db.relationship(
-        'Exemplar', backref=db.backref('usuarios', lazy=True))
     
     @staticmethod
     def novo():
         return Usuario(
             id=0,
-            idExemplar=0,
-            tipo="",
+            tipo=1,
             nome="",
             cpf="",
             email="",
             telefone="",
-            endereco="",
-            status="",
+            status=1,
             observacao=""
         )
 
@@ -42,9 +35,7 @@ class Usuario(db.Model):
 
     @staticmethod
     def listar():
-        return Usuario.query.options(
-            db.joinedload(Usuario.exemplar)
-        ).all()
+        return Usuario.query.all()
 
     def salvar(self):
         if self.id and self.id > 0:

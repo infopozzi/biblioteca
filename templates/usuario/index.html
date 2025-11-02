@@ -19,29 +19,27 @@
             <th scope="col">CPF</th>
             <th scope="col">E-mail</th>
             <th scope="col">Telefone</th>
-            <th scope="col">Endereço</th>
             <th scope="col">Status</th>
             <th scope="col">Observação</th>
             <th scope="col" style="text-align: right;">Ação</th>
           </tr>
         </thead>
         <tbody>
-          {% for item in lista %}
+          {% for usuario in lista %}
     
           <tr>
-            <th scope="row"> {{item.id}}</th>
-            <td> {{item.descricaoTipo}}</td>
-            <td> {{item.nome}}</td>
-            <td> {{item.cpf}}</td>
-            <td> {{item.email}}</td>
-            <td> {{item.telefone}}</td>
-            <td> {{item.endereco}}</td>
-            <td> {{item.descricaoStatus}}</td>
-            <td> {{item.observacao}}</td>
+            <th scope="row"> {{usuario.id}}</th>
+            <td> {{usuario.tipo}}</td>
+            <td> {{usuario.nome}}</td>
+            <td> {{usuario.cpf}}</td>
+            <td> {{usuario.email}}</td>
+            <td> {{usuario.telefone}}</td>
+            <td> {{usuario.status}}</td>
+            <td> {{usuario.observacao}}</td>
             <td>
               <div class="btn-group" style="text-align: right;">
-                <a href="/usuario/cadastro/{{item.id}}" type="button" class="btn btn-warning" >Alterar</a>
-                <a onclick="Excluir('{{item.id}}')" data-id="{{item.id}}" type="button" class="btn btn-danger" >Excluir</a>
+                <a href="/usuario/cadastro/{{usuario.id}}" type="button" class="btn btn-warning" >Alterar</a>
+                <a onclick="Excluir('{{usuario.id}}')" data-id="{{usuario.id}}" type="button" class="btn btn-danger" >Excluir</a>
               </div>
             </td>
     

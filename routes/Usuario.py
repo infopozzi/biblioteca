@@ -3,51 +3,61 @@ from Repositorio.Usuario import Usuario, UsuarioNaoEncontrado
 
 usuario_route = Blueprint('usuario', __name__)
 
+# --- Rota para listagem de usuários ---
 @usuario_route.route('/')
 def index():
-    lista = Usuario.listar()
-    return render_template('usuario/index.html', lista=lista)
+    lista_usuarios = Usuario.listar()
+    return render_template('usuario/index.html', lista=lista_usuarios)
 
-@usuario_route.route('/usuario/cadastro', methods=['GET'])
-@usuario_route.route('/usuario/cadastro/<int:id>', methods=['GET'])
-def cadastro(id=None):
-    if id:
-        usuario = Usuario.obter(id)
-    else:
-        usuario = Usuario.novo()
+
+# --- Rota para cadastro e edição ---
+@usuario_route.route('/cadastro', methods=['GET', 'POST'])
+@usuario_route.route('/cadastro/<int:id>', methods=['GET', 'POST'])
+def cadastro(id=0):
+    if request.method == 'POST':
+        # Pega o ID do formulário
+        id_form = request.form.get('id', type=int)
+
+        # Busca ou cria novo usuário
+        usuario = Usuario.obter(id_form) if id_form and id_form > 0 else Usuario()
+
+        # Pega os campos do formulário
+        usuario.tipo = request.form.get('tipo', type=int)
+        usuario.nome = request.form.get('nome')
+        usuario.cpf = request.form.get('cpf')
+        usuario.email = request.form.get('email')
+        usuario.telefone = request.form.get('telefone')
+        usuario.status = request.form.get('status', type=int)
+        usuario.observacao = request.form.get('observacao')
+
+        # Validação simples
+        if not usuario.nome or not usuario.cpf or not usuario.email:
+            return "Erro: Nome, CPF e E-mail são obrigatórios.", 400
+
+        # Salva no banco
+        try:
+            usuario.salvar()
+            return redirect(url_for('usuario.index'))
+        except Exception as e:
+            return f"Erro ao salvar usuário: {e}", 500
+
+    
+    # Se for GET
+    usuario = Usuario.novo() if id == 0 else Usuario.obter(id)
     return render_template('usuario/cadastro.html', usuario=usuario)
 
-@usuario_route.route('/usuario/salvar', methods=['POST'])
-def salvar():
-    f = request.form
-    id = f.get('id')
-    if id and id != '0':
-        usuario = Usuario.obter(int(id))
-    else:
-        usuario = Usuario.novo()
 
-    # mapear campos do formulário para o modelo
-    usuario.idExemplar = int(f.get('idExemplar')) if f.get('idExemplar') else None
-    usuario.tipo = int(f.get('tipo')) if f.get('tipo') else 0
-    usuario.nome = f.get('nome', '').strip()
-    usuario.cpf = f.get('cpf', '').strip()
-    usuario.email = f.get('email', '').strip()
-    usuario.telefone = f.get('telefone', '').strip()
-    usuario.endereco = f.get('endereco', '').strip()
-    usuario.status = int(f.get('status')) if f.get('status') else 0
-    usuario.observacao = f.get('observacao', '').strip()
+# --- Rota para exclusão via AJAX ---
+@usuario_route.route('/excluirAjax', methods=['POST'])
+def excluir_ajax():
+    id_usuario = request.form.get('id', type=int)
+    if not id_usuario:
+        return jsonify({'status': 'ERROR', 'message': 'ID inválido.'}), 400
 
-    usuario.salvar()
-    return redirect(url_for('usuario.index'))
-
-@usuario_route.route('/usuario/excluir/<int:id>', methods=['POST', 'DELETE'])
-def excluir(id):
     try:
-        Usuario.excluir(id)
-        if request.is_json or request.method == 'DELETE':
-            return jsonify({'status': 'ok'})
-        return redirect(url_for('usuario.index'))
+        Usuario.excluir(id_usuario)
+        return jsonify({'status': 'OK', 'message': 'Usuário excluído com sucesso.'})
     except UsuarioNaoEncontrado as e:
-        if request.is_json or request.method == 'DELETE':
-            return jsonify({'status': 'error', 'message': str(e)}), 404
-        return redirect(url_for('usuario.index'))
+        return jsonify({'status': 'ERROR', 'message': str(e)}), 404
+    except Exception as e:
+        return jsonify({'status': 'ERROR', 'message': f'Erro ao excluir: {str(e)}'}), 500
