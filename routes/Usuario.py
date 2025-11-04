@@ -28,7 +28,7 @@ def cadastro(id=0):
         usuario.email = request.form.get('email')
         usuario.telefone = request.form.get('telefone')
         usuario.status = request.form.get('status', type=int)
-        usuario.observacao = request.form.get('observacao')
+
 
         # Validação simples
         if not usuario.nome or not usuario.cpf or not usuario.email:

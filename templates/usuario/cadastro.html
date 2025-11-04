@@ -1,60 +1,61 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
-<div class="card">
-  <h5 class="card-header">Cadastro/Usuário</h5>
-  <div class="card-body">
+<div class="card shadow-sm mt-4">
+  <h5 class="card-header bg-primary text-white">Cadastro / Usuário</h5>
 
+  <div class="card-body">
     <form method="POST" action="/usuario/cadastro" class="row g-3">
 
-      <input type="hidden" class="form-control" id="id" name="id" value="{{usuario.id}}">
-    
+      <input type="hidden" id="id" name="id" value="{{ usuario.id }}">
+
       <div class="col-md-6">
         <label for="tipo" class="form-label">Tipo</label>
         <select class="form-control" name="tipo" id="tipo" required>
-            <option value="">--Selecione</option>
-            <option value="1" {% if usuario.tipo == 1 %}selected{% endif %}>Funcionário</option>
-            <option value="2" {% if usuario.tipo == 2 %}selected{% endif %}>Professor</option>
-            <option value="3" {% if usuario.tipo == 3 %}selected{% endif %}>Aluno</option>
-            <option value="4" {% if usuario.tipo == 4 %}selected{% endif %}>Público</option>
+          <option value="">--Selecione--</option>
+          <option value="1" {% if usuario.tipo == 1 %}selected{% endif %}>Funcionário</option>
+          <option value="2" {% if usuario.tipo == 2 %}selected{% endif %}>Professor</option>
+          <option value="3" {% if usuario.tipo == 3 %}selected{% endif %}>Aluno</option>
+          <option value="4" {% if usuario.tipo == 4 %}selected{% endif %}>Público</option>
         </select>
       </div>
-    
-        <div class="col-md-6">
-          <label for="nome" class="form-label">Nome</label>
-          <input type="text" class="form-control" id="nome" name="nome" required value="{{usuario.nome}}">
-        </div>
-    
-        <div class="col-md-6">
-          <label for="cpf" class="form-label">CPF</label>
-          <input type="text" class="form-control" id="cpf" name="cpf" required value="{{usuario.cpf}}">
-        </div>
-    
-        <div class="col-md-6">
-          <label for="email" class="form-label">E-mail</label>
-          <input type="email" class="form-control" id="email" name="email" required required value="{{usuario.email}}">
-        </div>
-    
-        <div class="col-md-6">
-          <label for="telefone" class="form-label">Telefone</label>
-          <input type="text" class="form-control" id="telefone" name="telefone" required value="{{usuario.telefone}}">
-        </div>
-    
-        <div class="col-md-6">
-          <label for="status" class="form-label">Status</label>
-          <select class="form-control" name="status" required>
-              <option value="">--Selecione</option>
-              <option value="1">Ativo</option>
-              <option value="0">Inativo</option>
-          </select>
-        </div>
-    
-      <div class="col-12">
-        <button type="submit" class="btn btn-success">Salvar</button>
+
+      <div class="col-md-6">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome" required value="{{ usuario.nome }}">
       </div>
+
+      <div class="col-md-6">
+        <label for="cpf" class="form-label">CPF</label>
+        <input type="text" class="form-control" id="cpf" name="cpf" required value="{{ usuario.cpf }}">
+      </div>
+
+      <div class="col-md-6">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email" required value="{{ usuario.email }}">
+      </div>
+
+      <div class="col-md-6">
+        <label for="telefone" class="form-label">Telefone</label>
+        <input type="text" class="form-control" id="telefone" name="telefone" required value="{{ usuario.telefone }}">
+      </div>
+
+      <div class="col-md-6">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-control" name="status" id="status" required>
+          <option value="">--Selecione--</option>
+          <option value="1" {% if usuario.status == 1 %}selected{% endif %}>Ativo</option>
+          <option value="0" {% if usuario.status == 0 %}selected{% endif %}>Inativo</option>
+        </select>
+      </div>
+
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="/usuario" class="btn btn-secondary">Voltar</a>
+      </div>
+
     </form>
   </div>
 </div>
-
 
 {% endblock %}

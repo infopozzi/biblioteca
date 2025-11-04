@@ -10,7 +10,6 @@ class Usuario(db.Model):
     email = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(50), nullable=False)
     status = db.Column(db.Integer, nullable=False)             # 1=Ativo,2=Inativo,...
-    observacao = db.Column(db.Text, nullable=True)
 
     
     @staticmethod
@@ -22,8 +21,7 @@ class Usuario(db.Model):
             cpf="",
             email="",
             telefone="",
-            status=1,
-            observacao=""
+            status=1
         )
 
     @staticmethod

@@ -4,56 +4,75 @@
 <div class="card">
   <h5 class="card-header">Cadastro/Publicação</h5>
   <div class="card-body">
-    <div class="row">
-      <div class="col-12 " style="text-align:right;">
-        <a href="/usuario/cadastro" type="button" class="btn btn-primary" >Novo Usuário</a>
+    <div class="row mb-3">
+      <div class="col-12 text-end">
+        <a href="/usuario/cadastro" class="btn btn-primary">Novo Usuário</a>
       </div>
     </div>
-    
-    <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Nome</th>
-            <th scope="col">CPF</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Status</th>
-            <th scope="col">Observação</th>
-            <th scope="col" style="text-align: right;">Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for usuario in lista %}
-    
-          <tr>
-            <th scope="row"> {{usuario.id}}</th>
-            <td> {{usuario.tipo}}</td>
-            <td> {{usuario.nome}}</td>
-            <td> {{usuario.cpf}}</td>
-            <td> {{usuario.email}}</td>
-            <td> {{usuario.telefone}}</td>
-            <td> {{usuario.status}}</td>
-            <td> {{usuario.observacao}}</td>
-            <td>
-              <div class="btn-group" style="text-align: right;">
-                <a href="/usuario/cadastro/{{usuario.id}}" type="button" class="btn btn-warning" >Alterar</a>
-                <a onclick="Excluir('{{usuario.id}}')" data-id="{{usuario.id}}" type="button" class="btn btn-danger" >Excluir</a>
-              </div>
-            </td>
-    
-          </tr>
-    
-            {% endfor %}
-    
-        </tbody>
-      </table>
-    
+
+    <table class="table table-striped table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" style="width: 5%;">#</th>
+          <th scope="col" style="width: 10%;">Tipo</th>
+          <th scope="col" style="width: 20%;">Nome</th>
+          <th scope="col" style="width: 10%;">CPF</th>
+          <th scope="col" style="width: 15%;">E-mail</th>
+          <th scope="col" style="width: 10%;">Telefone</th>
+          <th scope="col" style="width: 10%;">Status</th>
+          <th scope="col" style="width: 20%; text-align: right;">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in lista %}
+        <tr>
+          <th scope="row">{{ usuario.id }}</th>
+          
+          <!-- Tipo -->
+          <td>
+            {% if usuario.tipo == 1 %}
+              Funcionário
+            {% elif usuario.tipo == 2 %}
+              Professor
+            {% elif usuario.tipo == 3 %}
+              Aluno
+            {% elif usuario.tipo == 4 %}
+              Público
+            {% else %}
+              Desconhecido
+            {% endif %}
+          </td>
+
+          <!-- Dados principais -->
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.cpf }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.telefone }}</td>
+
+          <!-- Status -->
+          <td>
+            {% if usuario.status == 1 %}
+              <span class="badge bg-success">Ativo</span>
+            {% else %}
+              <span class="badge bg-secondary">Inativo</span>
+            {% endif %}
+          </td>
+
+          <!-- Botões de ação -->
+          <td class="text-end">
+            <div class="btn-group">
+              <a href="/usuario/cadastro/{{ usuario.id }}" class="btn btn-warning btn-sm">Alterar</a>
+              <button onclick="Excluir('{{ usuario.id }}')" class="btn btn-danger btn-sm">Excluir</button>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
   </div>
 </div>
 
+<script src="{{ url_for('static', filename='usuario.js') }}"></script>
 
-  <script src="{{url_for('static', filename='usuario.js')}}"></script>
-
-  {% endblock %}
+{% endblock %}
