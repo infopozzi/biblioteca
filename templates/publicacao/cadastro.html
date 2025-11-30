@@ -84,16 +84,19 @@
 
       <div class="col-md-3">
         <label for="qtdeTotal" class="form-label">Quantidade Total</label>
-        <input type="number" class="form-control" id="qtdeTotal" name="qtdeTotal" value="{{ item.qtdeTotal }}">
+        <input type="number" disabled class="form-control" id="qtdeTotal" name="qtdeTotal" value="{{ item.qtdeTotal }}">
       </div>
 
       <div class="col-md-3">
         <label for="qtdeDisponivel" class="form-label">Quantidade Disponível</label>
-        <input type="number" class="form-control" id="qtdeDisponivel" name="qtdeDisponivel" value="{{ item.qtdeDisponivel }}">
+        <input type="number" disabled class="form-control" id="qtdeDisponivel" name="qtdeDisponivel" value="{{ item.qtdeDisponivel }}">
       </div>
 
-      <div class="col-12">
+      <div class="col-12 text-end">
         <button type="submit" class="btn btn-success">Salvar</button>
+        
+        <a href="/publicacao" class="btn btn-secondary">Voltar</a>
+
       </div>
     </form>
   </div>

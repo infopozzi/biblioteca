@@ -1,0 +1,118 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="card">
+  <h5 class="card-header">Solicitação/ Empréstimo</h5>
+  <div class="card-body">
+    <form method="POST" id="formCadastro" action="/emprestimo/cadastro" class="row g-3">
+  
+      <input type="hidden" class="form-control" id="id" name="id" value="{{item.id}}">
+    
+        <div class="col-md-8">
+          <label for="idPublicacoes" class="form-label">Publicação</label>
+         <select onchange="listarExemplares()" class="form-control" name="idPublicacoes" id="idPublicacoes" >
+           <option value="">--Selecione--</option>
+            {% for item_ in listaPublicacoes %}
+                <option value="{{ item_.id}}|{{item_.titulo }}">Autor: {{item_.autor.nome }} | Categoria: {{item_.categoria.nome }} | Título: {{ item_.titulo}} | Disponivel:  {{ item_.qtdeDisponivel}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+      <div class="col-md-3">
+          <label for="idExemplar" class="form-label">Exemplar</label>
+         <select class="form-control" name="idExemplares" id="idExemplares" >
+           <option value="">--Selecione--</option>
+          </select>
+        </div>
+    
+      <div class="col-md-1"> <br>
+        <button type="button" onclick="adicionar()" class="btn btn-primary">Adicionar</button>
+      </div>
+
+      <div class="col-md-12">
+          <label for="lsLivros" class="form-label">Exemplares do empréstimo</label>
+
+      <input type="hidden" name="lsLivros" id="lsLivros" value="{{item.lsLivros}}">
+
+      <table id="tbLivros" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Publicacão</th>
+              <th scope="col">Localização</th>
+
+              <th scope="col" style="text-align: right;">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item_ in lsEmprestimo %}
+      
+            <tr>
+              <th class='col-id' scope="row"> {{item_.id}}</th>
+              <td> {{item_.publicacao.titulo}}</td>
+              <td> {{item_.localizacao}}</td>
+
+              <td style="text-align: right;">
+                <div class="btn-group" >
+                  <button id="btnExcluir"
+                          {{ "disabled" if item.id > 0 else "" }}
+                          type="button"
+                          class="btn btn-danger">
+                      Excluir
+                  </button>                </div>
+              </td>
+              {% endfor %}
+      
+            </tr>
+      
+          </tbody>
+        </table>
+
+        </div>
+
+
+       <div class="col-md-3">
+          <label for="idCliente" class="form-label">Cliente</label>
+         <select class="form-control" name="idCliente" id="idCliente" required>
+            {% for item_ in listaCliente %}
+              {% if item_.id == item.idCliente %}
+                <option selected value="{{ item_.id }}">{{ item_.nome }}</option>
+              {% else %}
+                <option value="{{ item_.id }}">{{ item_.nome }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+      <div class="col-md-3">
+          <label for="dtCadastro" class="form-label">Data da retirada</label>
+          <input type="date" class="form-control" id="dtCadastro" name="dtCadastro" required value="{{item.dtCadastro}}">
+      </div>
+
+      <div class="col-md-3">
+          <label for="dtPrevisaoEntrega" class="form-label">Previsão de entrega</label>
+          <input type="date" class="form-control" id="dtPrevisaoEntrega" name="dtPrevisaoEntrega" required value="{{item.dtPrevisaoEntrega}}">
+      </div>
+
+      <div class="col-md-3">
+          <label for="dtEntregaEfetiva" class="form-label">Entrega efetiva</label>
+          <input type="date" class="form-control" id="dtEntregaEfetiva" name="dtEntregaEfetiva" value="{{item.dtEntregaEfetiva}}">
+      </div>
+
+      <div class="col-md-12 text-end"> <br>
+        <button type="submit" 
+        {{ "disabled" if item.situacao == "Concluído" else "" }}
+        class="btn btn-success">Salvar</button>
+
+      <a href="/emprestimo" class="btn btn-secondary">Voltar</a>
+
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+<script src="{{url_for('static', filename='emprestimo.js')}}"></script>
+
+{% endblock %}

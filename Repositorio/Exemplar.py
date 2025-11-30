@@ -11,6 +11,16 @@ class Exemplar(db.Model):
     condicoes = db.Column(db.Integer, nullable=False)
 
     publicacao = db.relationship('Publicacao', backref=db.backref('exemplares', lazy=True))
+   
+    def to_dict(self):
+        
+        ds_condicoes = "Bom estado"
+        if (self.condicoes == 2):
+            ds_condicoes = "Médio estado"
+        if (self.condicoes == 3):
+            ds_condicoes = "Péssimo estado"
+            
+        return {"id": self.id, "localizacao": self.localizacao, "status": self.status, "ds_condicoes": ds_condicoes }  
 
     @staticmethod
     def novo():
@@ -30,10 +40,15 @@ class Exemplar(db.Model):
         return exemplar
 
     @staticmethod
-    def listar():
-        return Exemplar.query.options(
-            db.joinedload(Exemplar.publicacao)
-        ).all()
+    def listar(ids=None):
+        query = Exemplar.query.options(
+        db.joinedload(Exemplar.publicacao)
+    )
+
+        if ids:  # se veio lista de ids
+            query = query.filter(Exemplar.id.in_(ids))
+
+        return query.all()
 
     def salvar(self):
         if self.id and self.id > 0:

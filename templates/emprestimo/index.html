@@ -1,0 +1,85 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="card">
+  <h5 class="card-header">Solicitação/ Empréstimo</h5>
+  <div class="card-body">
+
+    <form method="GET" id="formPesquisa" action="/emprestimo" class="row g-3">
+    
+      <div class="row">
+        <div class="col-md-3">
+          <label for="idUsuario" class="form-label">Cliente</label>
+          <select class="form-control" name="idUsuario" id="idUsuario">
+            <option value="">--Todos--</option>
+            {% for item_ in listaCliente %}
+              <option value="{{item_.id}}">{{item_.nome}}</option>
+            {% endfor %}
+        </select>
+        </div>
+      
+    <div class="col-md-2">
+      <label for="status" class="form-label">Status</label>
+      <select name="status" class="form-control">
+        <option value="">--Todos--</option>
+        <option value="Emprestado">Emprestado</option>
+        <option value="Concluído">Concluído</option>
+        <option value="Atrasado">Atrasado</option>
+      </select>
+    </div>
+
+      <div class="col-md-3">
+        <br/>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-info">Buscar</button>
+          <a href="/emprestimo/cadastro" type="button" class="btn btn-primary" >Novo Empréstimo</a>
+        </div>
+      </div>
+    </div>
+
+    </form>  
+    
+    <hr>
+    
+    <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Data da retirada</th>
+            <th scope="col">Previsão de entrega</th>
+            <th scope="col">Entrega efetiva</th>
+            <th scope="col">Status</th>
+            <th scope="col" style="text-align: right;">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in lista %}
+    
+          <tr>
+            <th scope="row"> {{item.id}}</th>
+            <td> {{item.usuario.nome}}</td>
+            <td> {{item.dtCadastro}}</td>
+            <td> {{item.dtPrevisaoEntrega}}</td>
+            <td> {{item.dtEntregaEfetiva}}</td>
+            <td> {{item.situacao}}</td>
+
+            <td style="text-align: right;">
+              <div class="btn-group" >
+                <button onclick="window.location.href='/emprestimo/cadastro/{{ item.id }}'"
+                 type="button" class="btn btn-warning" >Visualizar/Alterar</button>
+                
+            </td>
+            {% endfor %}
+    
+          </tr>
+    
+        </tbody>
+      </table>
+ 
+  </div>
+</div>
+
+  <script src="{{url_for('static', filename='emprestimo.js')}}"></script>
+  
+  {% endblock %}

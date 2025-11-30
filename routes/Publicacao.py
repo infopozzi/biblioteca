@@ -41,8 +41,8 @@ def cadastro(id=0):
         item.ano = request.form.get('ano', type=int)
         item.titulo = request.form.get('titulo')
         item.descricao = request.form.get('descricao')
-        item.qtdeTotal = request.form.get('qtdeTotal', type=int)
-        item.qtdeDisponivel = request.form.get('qtdeDisponivel', type=int)
+        #item.qtdeTotal = request.form.get('qtdeTotal', type=int)
+        #item.qtdeDisponivel = request.form.get('qtdeDisponivel', type=int)
 
         # Salva o item no banco de dados
         item.salvar()

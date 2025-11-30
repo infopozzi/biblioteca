@@ -9,6 +9,7 @@ from routes.Editora import editora_route
 from routes.Publicacao import publicacao_route
 from routes.Exemplar import exemplar_route
 from routes.Usuario import usuario_route
+from routes.Emprestimo import emprestimo_route
 #from routes.Relatorio import relatorio_route
 
 app = Flask(__name__)
@@ -24,6 +25,7 @@ app.register_blueprint(editora_route, url_prefix='/editora')
 app.register_blueprint(publicacao_route, url_prefix='/publicacao')
 app.register_blueprint(exemplar_route, url_prefix='/exemplar')
 app.register_blueprint(usuario_route, url_prefix='/usuario')
+app.register_blueprint(emprestimo_route, url_prefix='/emprestimo')
 #app.register_blueprint(relatorio_route, url_prefix='/relatorio')
 
 

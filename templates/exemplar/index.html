@@ -15,7 +15,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">idPublicacao</th>
+            <th scope="col">Título da publicação</th>
             <th scope="col">localizacao</th>
             <th scope="col">condicoes</th>
             <th scope="col">status</th>
@@ -27,7 +27,7 @@
     
           <tr>
             <th scope="row"> {{item.id}}</th>
-            <td> {{item.idPublicacao}}</td>
+            <td> {{item.publicacao.titulo}}</td>
             <td> {{item.localizacao}}</td>
             
             <td> 
@@ -52,11 +52,6 @@
               <div class="btn-group" >
                 <a href="/exemplar/cadastro/{{item.id}}" type="button" class="btn btn-warning" >Alterar</a>
 
-                {% if item.status == 1 %}
-                 <input type="button" class="btn btn-success" value="Emprestar" onclick="addCarrinhoExemplar('{{item.publicacao.titulo}}','{{item.id}}')" >
-                {% else %}
-                <input type="button" class="btn btn-success" disabled value="Emprestar" >
-                {% endif %}
                  <a onclick="Excluir('{{item.id}}')" data-id="{{item.id}}" type="button" class="btn btn-danger" >Excluir</a>
               </div>
             </td>
@@ -67,12 +62,6 @@
     
         </tbody>
       </table>
-  </div>
-  <div class="card-footer">
-    <div class="row">
-      <a href="/publicacao" type="button" class="btn btn-secondary" >Voltar</a>
-    </div>
-    
   </div>
 </div>
 

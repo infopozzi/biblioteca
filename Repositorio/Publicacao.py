@@ -3,7 +3,6 @@ from Repositorio.Autor import Autor
 from Repositorio.Categoria import Categoria
 from Repositorio.Editora import Editora
 
-
 class Publicacao(db.Model):
     __tablename__ = 'Publicacao'
     id = db.Column(db.Integer, primary_key=True)
@@ -18,8 +17,8 @@ class Publicacao(db.Model):
     ano = db.Column(db.Integer, nullable=False)
     titulo = db.Column(db.String(255), nullable=False)
     descricao = db.Column(db.Text, nullable=True)
-    qtdeTotal = db.Column(db.Integer, default=0, nullable=False)
-    qtdeDisponivel = db.Column(db.Integer, default=0, nullable=False)
+    #qtdeTotal = db.Column(db.Integer, default=0, nullable=False)
+    #qtdeDisponivel = db.Column(db.Integer, default=0, nullable=False)
 
     autor = db.relationship(
         'Autor', backref=db.backref('publicacoes', lazy=True))
@@ -28,11 +27,20 @@ class Publicacao(db.Model):
     editora = db.relationship(
         'Editora', backref=db.backref('publicacoes', lazy=True))
 
+    @property
+    def qtdeTotal(self):
+        return len(self.exemplares)
+    
+    @property
+    def qtdeDisponivel(self):
+        return len([e for e in self.exemplares if e.status == 1])
+    
+
     @staticmethod
     def novo():
         return Publicacao(
             id=0, idAutor=0, idCategoria=0, idEditora=0, idTipo=0,
-            ano="", titulo="", descricao="", qtdeTotal=1, qtdeDisponivel=1
+            ano="", titulo="", descricao="" #, qtdeTotal=1, qtdeDisponivel=1
         )
 
     @staticmethod
